@@ -16,10 +16,10 @@ RUN ssh-keygen -A \
 # USER git
 # WORKDIR /home/git/
 
-RUN cd /home/git/ && \
+RUN adduser git && \
+    su git && \
     mkdir .ssh && chmod 700 .ssh && \
-    touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys && \
-    chown .ssh/authorized_keys && chgrp nogroup .ssh/authorized_keys
+    touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys 
 
 # example empty project
 RUN cd /srv/git && \
@@ -29,5 +29,5 @@ RUN cd /srv/git && \
 
 
 EXPOSE 22
-# ENTRYPOINT ["sh", "-c", "rc-status; rc-service sshd start"]
-# CMD ["/usr/sbin/sshd","-D"]
+ENTRYPOINT ["sh", "-c", "rc-status; rc-service sshd start"]
+#
