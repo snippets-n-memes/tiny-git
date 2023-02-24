@@ -6,16 +6,6 @@ RUN useradd -ms /bin/bash git && \
     mkdir /var/run/sshd && \
     chmod 0755 /var/run/sshd
 
-USER git
-
-RUN cd /home/git && \
-    mkdir .ssh && \
-    chmod 700 .ssh && \
-    touch .ssh/authorized_keys && \
-    chmod 600 .ssh/authorized_keys 
-
-USER root
-
 RUN apt update -y && \
     apt upgrade -y && \
     apt install -y git openssh-server && \
@@ -25,9 +15,14 @@ RUN apt update -y && \
 
 RUN service ssh start
 
-
 USER git
 WORKDIR /home/git/
+
+RUN cd /home/git && \
+    mkdir .ssh && \
+    chmod 700 .ssh && \
+    touch .ssh/authorized_keys && \
+    chmod 600 .ssh/authorized_keys 
 
 # example empty project
 RUN cd /srv/git && \
