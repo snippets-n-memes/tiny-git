@@ -18,7 +18,7 @@ RUN service ssh start
 USER git
 WORKDIR /home/git/
 
-RUN cd && \
+RUN cd /home/git && \
     mkdir .ssh && \
     chmod 700 .ssh && \
     touch .ssh/authorized_keys && \
@@ -30,6 +30,13 @@ RUN cd /srv/git && \
     cd project.git && \
     git init --bare
 
+# switch back to root, otherwise it will fail for no hostkeys, as only root can see them
+USER root
+
+# restrict git user to not allow ssh, while still allowing pulls/pushes/clones
+RUN echo $(which git-shell) >> /etc/shells && \
+    chsh git -s $(which git-shell)
 
 EXPOSE 22
-CMD ["/usr/sbin/sshd","-D"]
+# "-e" lets us get logs from the sshd service directly through docker logs, good for troubleshooting weird ssh issues
+CMD ["/usr/sbin/sshd","-D", "-e"]
