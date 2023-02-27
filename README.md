@@ -33,3 +33,7 @@ Enable ssh tcp port for ingress-nginx
             protocol: TCP
             targetPort: 8080
     ```
+1. clone repo to test
+    ```sh
+    git clone ssh://git@10.1.0.15:30957/srv/git/project.git
+    ```
