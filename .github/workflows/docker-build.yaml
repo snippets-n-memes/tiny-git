@@ -18,6 +18,7 @@ jobs:
     - name: Docker Build
       shell: bash
       run: |
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         DOCKER_BUILDKIT=1 docker build . \
           --platform=linux/arm64 \
           -t ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
