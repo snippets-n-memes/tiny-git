@@ -14,11 +14,10 @@ jobs:
   container:
     runs-on: ubuntu-latest
     steps:    
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Docker Build
       shell: bash
       run: |
-        cd docker
         DOCKER_BUILDKIT=1 docker build . -t ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
