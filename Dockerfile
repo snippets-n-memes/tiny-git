@@ -13,7 +13,10 @@ RUN apt update -y && \
     ssh-keygen -A && \
     service ssh --full-restart
 
-RUN service ssh start
+RUN sed -E -i 's|#AuthorizedKeysFile(\s*).ssh/authorized_keys.*|AuthorizedKeysFile\1/home/git/.ssh/authorized_keys|' /etc/ssh/sshd_config && \
+    sed 's/#PubkeyAuthentication/PubkeyAuthentication/' /etc/ssh/sshd_config && \
+    service ssh start
+    
 
 USER git
 WORKDIR /home/git/
