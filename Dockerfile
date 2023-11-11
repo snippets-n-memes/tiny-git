@@ -14,7 +14,7 @@ RUN apt update -y && \
     service ssh --full-restart
 
 RUN sed -E -i 's|#AuthorizedKeysFile(\s*).ssh/authorized_keys.*|AuthorizedKeysFile\1/home/git/.ssh/authorized_keys|' /etc/ssh/sshd_config && \
-    sed 's/#PubkeyAuthentication/PubkeyAuthentication/' /etc/ssh/sshd_config && \
+    sed -i 's/#PubkeyAuthentication/PubkeyAuthentication/' /etc/ssh/sshd_config && \
     service ssh start
     
 
