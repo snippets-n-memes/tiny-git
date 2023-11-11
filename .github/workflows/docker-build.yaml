@@ -27,7 +27,7 @@ jobs:
       run: |
         docker buildx build \
           --tag ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER) \
-          --platform linux/arm64,linux/amd64 \
+          --platform linux/arm64 \
            --load .
         docker images
     - name: Login to GitHub Container Registry
