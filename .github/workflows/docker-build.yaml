@@ -29,7 +29,7 @@ jobs:
       shell: bash
       run: |
         docker buildx build \
-          --tag ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER) \
+          --tag ghcr.io/${GITHUB_REPOSITORY,,}:${{ matrix.arch }}-$(date +%Y%m%d.$GITHUB_RUN_NUMBER) \
           --platform linux/${{ matrix.arch }} \
            --load .
         docker images
