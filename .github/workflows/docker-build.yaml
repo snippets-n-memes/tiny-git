@@ -35,7 +35,7 @@ jobs:
         docker buildx build \
           --tag $IMAGE\
           --platform linux/${{ matrix.arch }} \
-           --load .
+          --load .
         docker images
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
