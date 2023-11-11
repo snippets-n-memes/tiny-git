@@ -25,9 +25,10 @@ jobs:
     - name: Docker Build
       shell: bash
       run: |
-        docker buildx build . \
+        docker buildx build \
           --platform=linux/arm64,linux/amd64 \
-          -t ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
+          -t ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER) \
+          .
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
