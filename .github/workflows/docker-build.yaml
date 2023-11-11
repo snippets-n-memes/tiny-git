@@ -12,6 +12,9 @@ on:
     
 jobs:
   container:
+    strategy:
+      matrix:
+        arch: [ amd64, arm64 ]
     runs-on: ubuntu-latest
     steps:    
     - uses: actions/checkout@v3
@@ -27,7 +30,7 @@ jobs:
       run: |
         docker buildx build \
           --tag ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER) \
-          --platform linux/arm64 \
+          --platform linux/${{ matrix.arch }} \
            --load .
         docker images
     - name: Login to GitHub Container Registry
